@@ -1,5 +1,6 @@
 import { Pokemon, Stats } from '../entities/pokemon';
 import { HttpGateway } from '../gateways/http';
+import { PokemonMapper } from '../mappers/pokemon';
 
 interface FetchPokemonByNameUseCaseRequest {
   pokemonName: string;
@@ -33,7 +34,7 @@ export class FetchPokemonByNameUseCase {
 
     const { abilities, name, sprites, stats, types } = data;
 
-    const pokemon = new Pokemon({
+    const pokemon = PokemonMapper.toEntity({
       name: this.capitalizePokemonName(name),
       abilities: this.getAbilities(abilities),
       spriteUrl: sprites.front_default,

@@ -1,7 +1,7 @@
-import { Pokemon } from '../entities/pokemon';
+import { Pokemon, PokemonProps } from '../entities/pokemon';
 
 export class PokemonMapper {
-  static toObject(pokemon: Pokemon) {
+  static toObject(pokemon: Pokemon): PokemonProps {
     return {
       name: pokemon.name,
       abilities: pokemon.abilities,
@@ -9,5 +9,9 @@ export class PokemonMapper {
       stats: pokemon.stats,
       types: pokemon.types,
     };
+  }
+
+  static toEntity(props: PokemonProps): Pokemon {
+    return new Pokemon(props);
   }
 }

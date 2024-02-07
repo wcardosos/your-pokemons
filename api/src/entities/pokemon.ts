@@ -7,7 +7,7 @@ export type Stats = {
   speed: number;
 };
 
-interface PokemonProps {
+export interface PokemonProps {
   name: string;
   abilities: string[];
   types: string[];
