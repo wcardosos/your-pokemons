@@ -1,8 +1,6 @@
 import 'reflect-metadata';
 import './containers';
 import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
-import { AxiosGateway } from './gateways/axios';
-import { FetchPokemonByNameUseCase } from './use-cases/fetch-pokemon-by-name';
 import { FetchPokemonByNameController } from './controllers/fetch-pokemon-by-name';
 import { container } from 'tsyringe';
 
