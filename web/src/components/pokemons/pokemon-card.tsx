@@ -8,13 +8,34 @@ import {
 } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
 
-export function PokemonCard() {
+interface PokemonCardProps {
+  spriteUrl: string;
+  name: string;
+  abilities: string[];
+  types: string[];
+  stats: {
+    healthPoints: number;
+    attack: number;
+    defense: number;
+    specialAttack: number;
+    specialDefense: number;
+    speed: number;
+  };
+}
+
+export function PokemonCard({
+  spriteUrl,
+  name,
+  abilities,
+  types,
+  stats,
+}: PokemonCardProps) {
   return (
     <div className="bg-yellow-100 px-4 pb-4 rounded shadow-md">
       <div className="flex justify-center">
         <Image
           className="drop-shadow-sprite"
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+          src={spriteUrl}
           alt=""
           width={128}
           height={128}
@@ -22,12 +43,12 @@ export function PokemonCard() {
       </div>
       <section className="bg-yellow-50 grid gap-6 w-full px-4 py-6 rounded">
         <div className="grid gap-2">
-          <strong className="text-blue-500 text-xl">Pikachu</strong>
+          <strong className="text-blue-500 text-xl">{name}</strong>
           <div>
             <p className="text-gray-600 text-sm">
-              Abilities: lightning-rod, static
+              Abilities: {abilities.join(', ')}
             </p>
-            <p className="text-gray-600 text-sm">Types: eletric</p>
+            <p className="text-gray-600 text-sm">Types: {types.join(', ')}</p>
           </div>
         </div>
         <div>
@@ -35,27 +56,27 @@ export function PokemonCard() {
           <div className="grid grid-cols-3 grid-rows-2 text-gray-800 justify-center">
             <div className="flex gap-1 items-center">
               <Heart className="w-4 h-4 text-blue-500" weight="fill" />
-              <span>35</span>
+              <span>{stats.healthPoints}</span>
             </div>
             <div className="flex gap-1 items-center justify-self-center">
               <Sword className="w-4 h-4 text-blue-500" weight="fill" />
-              <span>55</span>
+              <span>{stats.attack}</span>
             </div>
             <div className="flex gap-1 items-center justify-self-end">
               <Shield className="w-4 h-4 text-blue-500" weight="fill" />
-              <span>40</span>
+              <span>{stats.defense}</span>
             </div>
             <div className="flex gap-1 items-center">
               <ShootingStar className="w-4 h-4 text-blue-500" weight="fill" />
-              <span>50</span>
+              <span>{stats.specialAttack}</span>
             </div>
             <div className="flex gap-1 items-center justify-self-center">
               <ShieldStar className="w-4 h-4 text-blue-500" weight="fill" />
-              <span>35</span>
+              <span>{stats.specialDefense}</span>
             </div>
             <div className="flex gap-1 items-center justify-self-end">
               <Gauge className="w-4 h-4 text-blue-500" weight="fill" />
-              <span>35</span>
+              <span>{stats.speed}</span>
             </div>
           </div>
         </div>

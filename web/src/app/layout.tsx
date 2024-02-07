@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Logo } from '@/components/common/logo';
+import { PokemonProvider } from '@/contexts/pokemon';
+import { Toaster } from '@/components/common/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,8 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Logo />
-        {children}
+        <PokemonProvider>
+          <Logo />
+          {children}
+          <Toaster />
+        </PokemonProvider>
       </body>
     </html>
   );
