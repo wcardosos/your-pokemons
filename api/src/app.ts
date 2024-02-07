@@ -1,9 +1,9 @@
-import Fastify, { FastifyRequest, FastifyReply } from 'fastify'
+import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
 
-const app = Fastify()
+const app = Fastify();
 
 app.get('/', (request: FastifyRequest, reply: FastifyReply) => {
-  return reply.send({ message: 'Hello World!' })
-})
+  return reply.send({ message: 'Hello World!' });
+});
 
-app.listen({ port: 3333 }, () => console.log('Server is running'))
+app.listen({ port: 3333 }, () => console.log('Server is running'));
