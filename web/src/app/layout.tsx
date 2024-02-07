@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { Logo } from '@/components/common/logo';
 import { PokemonProvider } from '@/contexts/pokemon';
 import { Toaster } from '@/components/common/ui/toaster';
+import { cn } from '@/lib/utils';
+import { Header } from '@/components/common/header';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,9 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn('bg-gray-50 text-gray-800', inter.className)}>
         <PokemonProvider>
-          <Logo />
+          <Header />
           {children}
           <Toaster />
         </PokemonProvider>

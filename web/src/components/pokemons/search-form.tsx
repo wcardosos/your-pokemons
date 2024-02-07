@@ -14,7 +14,6 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MagnifyingGlass } from '@phosphor-icons/react';
-import axios from 'axios';
 import { useContext } from 'react';
 import { PokemonContext } from '@/contexts/pokemon';
 import { useToast } from '../common/ui/use-toast';
@@ -29,7 +28,8 @@ type SearchPokemonFormData = z.infer<typeof searchPokemonFormSchema>;
 
 export function SearchForm() {
   const { toast } = useToast();
-  const { setPokemon } = useContext(PokemonContext);
+  const { isFetching, setPokemon, fetchPokemonByName, setIsFetching } =
+    useContext(PokemonContext);
   const searchPokemonForm = useForm<SearchPokemonFormData>({
     resolver: zodResolver(searchPokemonFormSchema),
     defaultValues: {
@@ -39,13 +39,12 @@ export function SearchForm() {
 
   const searchPokemon = async (formValues: SearchPokemonFormData) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3333/pokemon/${formValues.name.toLowerCase()}`,
-      );
+      setIsFetching(true);
 
-      setPokemon(data);
+      const fetchedPokemon = await fetchPokemonByName(formValues.name);
+
+      setPokemon(fetchedPokemon);
     } catch (error: any) {
-      console.log('erro');
       toast({
         title: 'An error occurs while trying to fetch the data',
         description:
@@ -54,6 +53,8 @@ export function SearchForm() {
             : 'Try again later',
         variant: 'destructive',
       });
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -80,6 +81,7 @@ export function SearchForm() {
           <Button
             type="submit"
             className="flex gap-4 p-4 bg-blue-500 hover:bg-blue-500/90 text-gray-50 shadow-md"
+            disabled={isFetching}
           >
             <span className="font-bold">Search</span>
             <MagnifyingGlass className="w-4 h-4" />
