@@ -5,6 +5,7 @@ import { PokemonProvider } from '@/contexts/pokemon';
 import { Toaster } from '@/components/common/ui/toaster';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/common/header';
+import { Footer } from '@/components/common/footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <PokemonProvider>
           <Header />
           {children}
+          <Footer />
           <Toaster />
         </PokemonProvider>
       </body>
