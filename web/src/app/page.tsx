@@ -33,7 +33,7 @@ export default function Home() {
   ) : null;
 
   return (
-    <main className="max-w-4xl mx-auto px-6 min-h-[90vh]">
+    <main className="max-w-2xl mx-auto px-6 pb-6 min-h-[90vh]">
       <h1 className="font-bold text-3xl text-blue-500 text-center mt-10">
         Find out everything about your favorite pokemon
       </h1>
