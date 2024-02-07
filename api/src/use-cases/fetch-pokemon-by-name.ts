@@ -1,4 +1,6 @@
 import { Pokemon, Stats } from '../entities/pokemon';
+import { InternalError } from '../errors/http/internal';
+import { NotFoundError } from '../errors/http/not-found';
 import { HttpGateway } from '../gateways/http';
 import { PokemonMapper } from '../mappers/pokemon';
 
@@ -18,7 +20,7 @@ export class FetchPokemonByNameUseCase {
   private BASE_POKEMON_URL: string;
 
   constructor(private httpGateway: HttpGateway) {
-    this.BASE_POKEMON_URL = 'https://pokeapi.co/api/v2/pokemon';
+    this.BASE_POKEMON_URL = 'https://pokeapi.cofd/api/v2/pokemon';
   }
 
   async execute({
@@ -29,7 +31,11 @@ export class FetchPokemonByNameUseCase {
     );
 
     if (error) {
-      throw Error(`The pokemon with name ${pokemonName} was not found`);
+      if (error.status === 404)
+        throw new NotFoundError(
+          `The pokemon with name ${pokemonName} was not found`,
+        );
+      else throw new InternalError(error.message);
     }
 
     const { abilities, name, sprites, stats, types } = data;

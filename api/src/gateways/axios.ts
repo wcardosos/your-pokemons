@@ -10,7 +10,13 @@ export class AxiosGateway implements HttpGateway {
       return { data: response.data, error: null };
     } catch (error: any) {
       console.error(error);
-      return { data: null, error: error.message };
+      return {
+        data: null,
+        error: {
+          status: error.response?.status,
+          message: error.message,
+        },
+      };
     }
   }
 }
