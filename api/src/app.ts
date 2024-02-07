@@ -29,4 +29,11 @@ app.get('/pokemon/:name', (request, reply) =>
   fetchPokemonByNameController.handle(request, reply),
 );
 
-app.listen({ port: 3333 }, () => console.log('Server is running'));
+app.listen({ host: '0.0.0.0', port: 3333 }, (err, address) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+
+  console.log(`Server is running at ${address}`);
+});
