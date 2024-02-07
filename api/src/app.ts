@@ -3,8 +3,11 @@ import './containers';
 import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import { FetchPokemonByNameController } from './controllers/fetch-pokemon-by-name';
 import { container } from 'tsyringe';
+import cors from '@fastify/cors';
 
 const app = Fastify();
+
+app.register(cors, {});
 
 const fetchPokemonByNameController = container.resolve(
   FetchPokemonByNameController,
