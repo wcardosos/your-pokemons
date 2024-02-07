@@ -1,3 +1,4 @@
+import { inject, injectable } from 'tsyringe';
 import { Pokemon, Stats } from '../entities/pokemon';
 import { InternalError } from '../errors/http/internal';
 import { NotFoundError } from '../errors/http/not-found';
@@ -16,11 +17,12 @@ type AbilitiesResponse = Array<{ ability: { name: string } }>;
 type StatsResponse = Array<{ base_stat: number; stat: { name: string } }>;
 type TypesReponse = Array<{ type: { name: string } }>;
 
+@injectable()
 export class FetchPokemonByNameUseCase {
   private BASE_POKEMON_URL: string;
 
-  constructor(private httpGateway: HttpGateway) {
-    this.BASE_POKEMON_URL = 'https://pokeapi.cofd/api/v2/pokemon';
+  constructor(@inject('HttpGateway') private httpGateway: HttpGateway) {
+    this.BASE_POKEMON_URL = 'https://pokeapi.co/api/v2/pokemon';
   }
 
   async execute({

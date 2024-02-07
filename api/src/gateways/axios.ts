@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { injectable } from 'tsyringe';
 import { HttpGateway } from './http';
 import axios from 'axios';
 
+@injectable()
 export class AxiosGateway implements HttpGateway {
   async get(endpoint: string) {
     try {

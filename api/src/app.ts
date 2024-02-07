@@ -1,22 +1,31 @@
+import 'reflect-metadata';
+import './containers';
 import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import { AxiosGateway } from './gateways/axios';
 import { FetchPokemonByNameUseCase } from './use-cases/fetch-pokemon-by-name';
 import { FetchPokemonByNameController } from './controllers/fetch-pokemon-by-name';
+import { container } from 'tsyringe';
 
 const app = Fastify();
 
-app.get('/', (request: FastifyRequest, reply: FastifyReply) => {
+const fetchPokemonByNameController = container.resolve(
+  FetchPokemonByNameController,
+);
+
+app.get('/', (_: FastifyRequest, reply: FastifyReply) => {
   return reply.send({ message: 'Hello World!' });
 });
 
-app.get('/pokemon/:name', async (request, reply) => {
-  const httpGateway = new AxiosGateway();
-  const fetchPokemonByNameUseCase = new FetchPokemonByNameUseCase(httpGateway);
-  const fetchPokemonByNameController = new FetchPokemonByNameController(
-    fetchPokemonByNameUseCase,
-  );
+/*
+  É necessário criar a função de callback que recebe os parâmetros de requisição e resposta e passar para o controller por conta
+  do tsyringe (lib utilizada para gerenciar a injeção de dependências da aplicação) não funcionar muito bem com o Express.
+  
+  Outra forma de resolver isso seria utilizando o bind, contudo achei que ficaria um pouco confuso dessa forma.
 
-  return fetchPokemonByNameController.handle(request, reply);
-});
+  Ex.: routes.get('/customers', customerController.index.bind(customerController))
+*/
+app.get('/pokemon/:name', (request, reply) =>
+  fetchPokemonByNameController.handle(request, reply),
+);
 
 app.listen({ port: 3333 }, () => console.log('Server is running'));
