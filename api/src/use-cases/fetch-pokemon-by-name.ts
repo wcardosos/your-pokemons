@@ -29,7 +29,7 @@ export class FetchPokemonByNameUseCase {
     pokemonName,
   }: FetchPokemonByNameUseCaseRequest): Promise<FetchPokemonByNameUseCaseResponse> {
     const { data, error } = await this.httpGateway.get(
-      `${this.BASE_POKEMON_URL}/${pokemonName}`,
+      `${this.BASE_POKEMON_URL}/${pokemonName.toLowerCase()}`,
     );
 
     if (error) {

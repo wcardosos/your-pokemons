@@ -1,4 +1,6 @@
 import { Pokemon } from '../../src/entities/pokemon';
+import { InternalError } from '../../src/errors/http/internal';
+import { NotFoundError } from '../../src/errors/http/not-found';
 import { HttpGateway } from '../../src/gateways/http';
 import { FetchPokemonByNameUseCase } from '../../src/use-cases/fetch-pokemon-by-name';
 import pokemonApiResponse from '../fixtures/pokemon-api-response.json';
@@ -17,6 +19,17 @@ describe('use case: fetch pokemon by name', () => {
     it('should call the api correctly', async () => {
       httpGatewayMock.get.mockResolvedValueOnce(pokemonApiResponse);
       await sut.execute({ pokemonName: 'pikachu' });
+
+      expect(httpGatewayMock.get).toHaveBeenCalledTimes(1);
+      expect(httpGatewayMock.get).toHaveBeenCalledWith(
+        'https://pokeapi.co/api/v2/pokemon/pikachu',
+      );
+    });
+
+    it('should search a pokemon name in lower case', async () => {
+      httpGatewayMock.get.mockResolvedValueOnce(pokemonApiResponse);
+
+      await sut.execute({ pokemonName: 'Pikachu' });
 
       expect(httpGatewayMock.get).toHaveBeenCalledTimes(1);
       expect(httpGatewayMock.get).toHaveBeenCalledWith(
@@ -49,15 +62,28 @@ describe('use case: fetch pokemon by name', () => {
       );
     });
 
-    it('should throws an error when the pokemon is not found', async () => {
+    it('should throws an not found error when the pokemon is not found', async () => {
       httpGatewayMock.get.mockResolvedValueOnce({
         data: null,
-        error: 'Not found',
+        error: {
+          status: 404,
+        },
       });
 
       await expect(() =>
         sut.execute({ pokemonName: 'pikachu' }),
-      ).rejects.toThrow('The pokemon with name pikachu was not found');
+      ).rejects.toThrow(NotFoundError);
+    });
+
+    it('should throws an internal error when another error occurs', async () => {
+      httpGatewayMock.get.mockResolvedValueOnce({
+        data: null,
+        error: 'Error',
+      });
+
+      await expect(() =>
+        sut.execute({ pokemonName: 'pikachu' }),
+      ).rejects.toThrow(InternalError);
     });
   });
 });
