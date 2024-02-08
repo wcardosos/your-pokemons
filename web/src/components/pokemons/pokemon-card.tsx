@@ -1,12 +1,5 @@
-import {
-  Gauge,
-  Heart,
-  Shield,
-  ShieldStar,
-  ShootingStar,
-  Sword,
-} from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
+import { StatsList } from './stats-list';
 
 interface PokemonCardProps {
   spriteUrl: string;
@@ -53,50 +46,7 @@ export function PokemonCard({
         </div>
         <div className="space-y-2">
           <span className="font-medium text-gray-800">Stats</span>
-          <div className="grid grid-cols-3 grid-rows-2 text-gray-800 justify-center">
-            <div className="flex gap-1 items-center">
-              <Heart
-                className="w-4 h-4 lg:w-6 lg:h-6 lg:text-xl text-blue-500"
-                weight="fill"
-              />
-              <span>{stats.healthPoints}</span>
-            </div>
-            <div className="flex gap-1 items-center justify-self-center">
-              <Sword
-                className="w-4 h-4 lg:w-6 lg:h-6 lg:text-xl text-blue-500"
-                weight="fill"
-              />
-              <span>{stats.attack}</span>
-            </div>
-            <div className="flex gap-1 items-center justify-self-end">
-              <Shield
-                className="w-4 h-4 lg:w-6 lg:h-6 lg:text-xl text-blue-500"
-                weight="fill"
-              />
-              <span>{stats.defense}</span>
-            </div>
-            <div className="flex gap-1 items-center">
-              <ShootingStar
-                className="w-4 h-4 lg:w-6 lg:h-6 lg:text-xl text-blue-500"
-                weight="fill"
-              />
-              <span>{stats.specialAttack}</span>
-            </div>
-            <div className="flex gap-1 items-center justify-self-center">
-              <ShieldStar
-                className="w-4 h-4 lg:w-6 lg:h-6 lg:text-xl text-blue-500"
-                weight="fill"
-              />
-              <span>{stats.specialDefense}</span>
-            </div>
-            <div className="flex gap-1 items-center justify-self-end">
-              <Gauge
-                className="w-4 h-4 lg:w-6 lg:h-6 lg:text-xl text-blue-500"
-                weight="fill"
-              />
-              <span>{stats.speed}</span>
-            </div>
-          </div>
+          <StatsList stats={stats} />
         </div>
       </section>
     </div>
