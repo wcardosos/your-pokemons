@@ -24,32 +24,32 @@ export function StatsList({ stats }: StatsListProps) {
     {
       icon: <Heart weight="fill" />,
       value: stats.healthPoints,
-      description: 'Pontos de vida',
+      description: 'Health points',
     },
     {
       icon: <Sword weight="fill" />,
       value: stats.attack,
-      description: 'Ataque',
+      description: 'Attack',
     },
     {
       icon: <Shield weight="fill" />,
       value: stats.defense,
-      description: 'Defesa',
+      description: 'Defense',
     },
     {
       icon: <ShootingStar weight="fill" />,
       value: stats.specialAttack,
-      description: 'Ataque especial',
+      description: 'Special attack',
     },
     {
       icon: <ShieldStar weight="fill" />,
       value: stats.specialDefense,
-      description: 'Defesa especial',
+      description: 'Special defense',
     },
     {
       icon: <Gauge weight="fill" />,
       value: stats.speed,
-      description: 'Velocidade',
+      description: 'Speed',
     },
   ];
 
